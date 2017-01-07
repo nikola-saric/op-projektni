@@ -21,18 +21,15 @@ def ulogovanje():
             ime.append(osobelista[0])
         brojImena = len(ime)
         indexKorisnika = -1
-        
+
         for i in range(brojImena):
             if imeProvera == ime[i]:
                 indexKorisnika = i
 
-
-        # provera odgovarajuce lozinke
-        lozinka = open("lozinke", "r")
-        loz = lozinka.readline()
-        lozinke = loz.split("|")
-
         # uporedjivanje korisnickog imena i lozinke:
+        lozinka = open("lozinke", "r")
+        lozinke = lozinka.read().splitlines()
+
         if (indexKorisnika != -1) and (lozinkaProvera == lozinke[indexKorisnika]):
 
             noviKorisnik = korisnik.Korisnik()
@@ -45,4 +42,3 @@ def ulogovanje():
 
         else:
             print("Uneli ste pogresno korisnicko ime ili lozinku.")
-

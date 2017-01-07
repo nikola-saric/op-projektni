@@ -13,6 +13,7 @@ class Let:
             noviLet = jedanLet.split("|")
             letovi.append(noviLet)
 
+
         letovi[0] = brojLeta
         letovi[1] = polaziste
         letovi[2] = odrediste
