@@ -1,38 +1,49 @@
-# korisnicko ime, lozinka, prezime, uloga(prodavac, menadzer)
+import filecitac
 
 class Korisnik:
-    # vraca samo ulogu korisnika
-    def info(self, indexKorisnika):
-        korisnici = open("korisnici", "r")
-        kor = korisnici.readlines()
-        osobe = (kor[indexKorisnika])
-        korisnikInfo = osobe.split("|")
-        korUloga = korisnikInfo[3]
-        return korUloga
 
-    # ispisuje podatke o ulogovanom korisniku
-    def informacije(self, indexKorisnika):
-        korisnici = open("korisnici", "r")
-        kor = korisnici.readlines()
-        osobe = (kor[indexKorisnika])
-        korisnikInfo = osobe.split("|")
-        korisnickoIme = korisnikInfo[0]
-        ime = korisnikInfo[1]
-        prezime = korisnikInfo[2]
-        uloga = korisnikInfo[3]
+    def __init__(self, korisnickoIme, lozinka, ime, prezime, uloga):
+        self.korisnickoIme = korisnickoIme
+        self.lozinka = lozinka
+        self.ime = ime
+        self.prezime = prezime
+        self.uloga = uloga
 
-        print("Korisnicko ime: ", korisnickoIme)
-        print("Ime:", ime)
-        print("Prezime:", prezime)
-        print("Uloga:", uloga)
+class KorisnikServis:
 
+    # funkcija vraca True ako su kredencijali tacni, False ako nisu
+    def login(self, korisnickoImeInput, lozinkaInput):
+        korisniciRedovi = filecitac.procitajDatoteku("korisnici.txt")
+        korisnickaImena = []
 
-class Avion:
-    def __init__(self, naziv, brojRed, brojSed):
-        self.naziv = naziv
-        self.brojRed = brojRed
-        self.brojSed = brojSed
+        for i in range(len(korisniciRedovi)):
+            korisnikRed = (korisniciRedovi[i])
+            osobelista = korisnikRed.split("|")
+            korisnickaImena.append(osobelista[0])
 
-    def mesta(self):
-        brojMesta = self.brojRed * self.brojSed
-        return brojMesta
+        pronadjenoKorisnickoIme = ""
+        for korImeFajl in korisnickaImena:
+            if korImeFajl == korisnickoImeInput:
+                pronadjenoKorisnickoIme = korisnickoImeInput
+
+        if pronadjenoKorisnickoIme == "":
+            return False
+
+        lozinke = filecitac.procitajDatoteku("lozinke.txt")
+        for lozinkaRed in lozinke:
+            red = lozinkaRed.split("|")
+            korisnickoIme = red[0]
+            lozinka = red[1]
+            if (korisnickoIme == pronadjenoKorisnickoIme) and (lozinkaInput == lozinka):
+                return True
+
+        return False
+
+    def vratiUlogu(self, korisnickoIme):
+        korisniciRedovi = filecitac.procitajDatoteku("korisnici.txt")
+        for korisnik in korisniciRedovi:
+            korisnikPodaci = korisnik.split("|")
+            if korisnikPodaci[0] == korisnickoIme:
+                return korisnikPodaci[3]
+
+        return None
