@@ -1,4 +1,4 @@
-import filecitac
+import fileUtility
 class LetServis:
 
     OPCIJA_PRETRAGE_POLAZISTE = "polaziste"
@@ -23,7 +23,7 @@ class LetServis:
 
         pronadjeniLetovi = []
 
-        letRedovi = filecitac.procitajDatoteku("letovi.txt")
+        letRedovi = fileUtility.procitajDatoteku("letovi.txt")
         for let in letRedovi:
             letRed = let.split("|")
             if input == letRed[indexPolja]:

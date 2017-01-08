@@ -2,6 +2,7 @@
 from korisnik import *
 from let import *
 from karte import *
+import karte
 
 
 def main():
@@ -32,6 +33,7 @@ def prikaziLoginOpcije():
 def prikaziOpcijeKorisniku(uloga):
     PRETRAGA_LETOVA = 1
     UNOSENJE_NOVE_KARTE = 2
+    BRISANJE_KARTE = 4
     LOG_OUT_KORISNIK = 5
     LOG_OUT_MENADZER = 3
     GASENJE_PROGRAMA_KORISNIK = 6
@@ -52,10 +54,14 @@ def prikaziOpcijeKorisniku(uloga):
                 prikaziOpcijePretrageLetova(letServis)
             elif opcija == UNOSENJE_NOVE_KARTE:
                 prikaziOpcijeUnosenjaNoveKarte()
+            elif opcija == BRISANJE_KARTE:
+                brisanjeKarte()
             elif opcija == LOG_OUT_KORISNIK:
                 prikaziLoginOpcije()
             elif opcija == GASENJE_PROGRAMA_KORISNIK:
                 break
+            else:
+                print("Uneli ste nepostojecu opciju.")
 
     elif uloga == "menadzer":
         while opcija != LOG_OUT_MENADZER:
@@ -70,6 +76,8 @@ def prikaziOpcijeKorisniku(uloga):
                 prikaziLoginOpcije()
             elif opcija == GASENJE_PROGRAMA_MENADZER:
                 break
+            else:
+                print("Uneli ste nepostojecu opciju.")
 
 
 def prikaziOpcijePretrageLetova(letServis):
@@ -115,6 +123,8 @@ def prikaziOpcijePretrageLetova(letServis):
         rezultatPretrage = letServis.pretragaLeta(prevoznik, letServis.OPCIJA_PRETRAGE_PREVOZNIKU)
         for let in rezultatPretrage:
             print(let)
+    else:
+        print("Uneli ste nepostojecu opciju.")
 
 
 def prikaziOpcijeUnosenjaNoveKarte():
@@ -144,6 +154,13 @@ def prikaziOpcijeUnosenjaNoveKarte():
 
         else:
             print("Uneli ste nepostojecu opciju.")
+
+
+def brisanjeKarte():
+    nazivLeta = input("Unesite naziv leta: ")
+    brojPasosaPutnika = input("Unesite broj pasosa putnika: ")
+    datumLeta = input("Unesite datum leta: ")
+    karte.obrisiKartu(nazivLeta, brojPasosaPutnika, datumLeta)
 
 
 main()
