@@ -1,9 +1,12 @@
 # Glavna metoda koja pokrece program!
 from korisnik import *
 from let import *
+from karte import *
+
 
 def main():
     prikaziLoginOpcije()
+
 
 def prikaziLoginOpcije():
     ulogovan = False
@@ -25,8 +28,10 @@ def prikaziLoginOpcije():
             ulogovan = True
             prikaziOpcijeKorisniku(uloga)
 
+
 def prikaziOpcijeKorisniku(uloga):
     PRETRAGA_LETOVA = 1
+    UNOSENJE_NOVE_KARTE = 2
     LOG_OUT_KORISNIK = 5
     LOG_OUT_MENADZER = 3
     GASENJE_PROGRAMA_KORISNIK = 6
@@ -45,6 +50,8 @@ def prikaziOpcijeKorisniku(uloga):
             opcija = eval(input("Unesite zeljenu opciju: "))
             if opcija == PRETRAGA_LETOVA:
                 prikaziOpcijePretrageLetova(letServis)
+            elif opcija == UNOSENJE_NOVE_KARTE:
+                prikaziOpcijeUnosenjaNoveKarte()
             elif opcija == LOG_OUT_KORISNIK:
                 prikaziLoginOpcije()
             elif opcija == GASENJE_PROGRAMA_KORISNIK:
@@ -57,13 +64,20 @@ def prikaziOpcijeKorisniku(uloga):
             print("3 Izlogujte se.")
             print("4 Ugasite program.")
             opcija = eval(input("Unesite zeljenu opciju: "))
-            if opcija == LOG_OUT_MENADZER:
+            if opcija == PRETRAGA_LETOVA:
+                prikaziOpcijePretrageLetova(letServis)
+            elif opcija == LOG_OUT_MENADZER:
                 prikaziLoginOpcije()
             elif opcija == GASENJE_PROGRAMA_MENADZER:
                 break
 
+
 def prikaziOpcijePretrageLetova(letServis):
     PRETRAGA_LETA_PO_POLAZISTU = 1
+    PRETRAGA_LETA_PO_ODREDISTU = 2
+    PRETRAGA_LETA_PO_VREMENU_POLETANJA = 3
+    PRETRAGA_LETA_PO_VREMENU_SLETANJA = 4
+    PRETRAGA_LETA_PO_PREVOZNIKU = 5
 
     print("1 Pretrazite po polazistu.")
     print("2 Pretrazite po odredistu.")
@@ -77,4 +91,59 @@ def prikaziOpcijePretrageLetova(letServis):
         rezultatPretrage = letServis.pretragaLeta(polaziste, LetServis.OPCIJA_PRETRAGE_POLAZISTE)
         for let in rezultatPretrage:
             print(let)
+
+    elif opcija == PRETRAGA_LETA_PO_ODREDISTU:
+        odrediste = input("Unesite odrediste: ")
+        rezultatPretrage = letServis.pretragaLeta(odrediste, letServis.OPCIJA_PRETRAGE_ODREDISTE)
+        for let in rezultatPretrage:
+            print(let)
+
+    elif opcija == PRETRAGA_LETA_PO_VREMENU_POLETANJA:
+        vremePoletanja = input("Unesite vreme poletanja: ")
+        rezultatPretrage = letServis.pretragaLeta(vremePoletanja, letServis.OPCIJA_PRETRAGE_VREME_POLETANJA)
+        for let in rezultatPretrage:
+            print(let)
+
+    elif opcija == PRETRAGA_LETA_PO_VREMENU_SLETANJA:
+        vremeSletanja = input("Unesite vreme sletanja: ")
+        rezultatPretrage = letServis.pretragaLeta(vremeSletanja, letServis.OPCIJA_PRETRAGE_VREME_SLETANJA)
+        for let in rezultatPretrage:
+            print(let)
+
+    elif opcija == PRETRAGA_LETA_PO_PREVOZNIKU:
+        prevoznik = input("Unesite naziv prevoznika: ")
+        rezultatPretrage = letServis.pretragaLeta(prevoznik, letServis.OPCIJA_PRETRAGE_PREVOZNIKU)
+        for let in rezultatPretrage:
+            print(let)
+
+
+def prikaziOpcijeUnosenjaNoveKarte():
+    UNOSENJE_NOVIH_KARATA = 1
+    STAMPANJE_UNETIH_NOVIH_KARATA = 2
+    opcija = 0
+    listaNovihKarata = []
+
+    while opcija != STAMPANJE_UNETIH_NOVIH_KARATA:
+        print("1 Unesite novu kartu: ")
+        print("2 Odstampajte nove unete karte: ")
+        opcija = eval(input("Unesite zeljenu opciju: "))
+        if opcija == UNOSENJE_NOVIH_KARATA:
+            nazivLeta = input("Unesite naziv leta: ")
+            imePutnika = input("Unesite ime putnika: ")
+            prezimePutnika = input("Unesite prezime putnika: ")
+            drzavljanstvoPutnika = input("Unesite drzavljanstvo putnika: ")
+            brojPasosaPutnika = input("Unesite broj pasosa putnika: ")
+            datumLeta = input("Unesite datum leta: ")
+            novaKarta = Karta(nazivLeta, imePutnika, prezimePutnika, drzavljanstvoPutnika, brojPasosaPutnika, datumLeta)
+            listaNovihKarata.append(novaKarta)
+
+        elif opcija == STAMPANJE_UNETIH_NOVIH_KARATA:
+            for novaKarta in listaNovihKarata:
+                Karta.upisiKarte(novaKarta)
+                Karta.printKarte(novaKarta)
+
+        else:
+            print("Uneli ste nepostojecu opciju.")
+
+
 main()

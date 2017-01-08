@@ -1,38 +1,13 @@
 # lista karata koje prodavac rezervise i koje se stampaju.
 class Karta:
-    def __init__(self, nazivLeta, imePutnika, prezimePutnika, drzavPutnika, brojPasosaPutnika):
+    def __init__(self, nazivLeta, imePutnika, prezimePutnika, drzavPutnika, brojPasosaPutnika, datumLeta):
         self.nazivLeta = nazivLeta
         self.imePutnika = imePutnika
         self.prezimePutnika = prezimePutnika
         self.drzavPutnika = drzavPutnika
         self.brojPasosaPutnika = brojPasosaPutnika
+        self.datumLeta = datumLeta
 
-    def proveraVremena(nazivLeta):
-        letoviFile = open("letovi.txt", "r")
-        letoviRF = letoviFile.readlines()
-        lenLetovi = len(letoviRF)
-        for i in range(lenLetovi):
-            jedanLet = letoviRF[i]
-            noviLet = jedanLet.split("|")
-            if nazivLeta == noviLet[0]:
-                polaziste = noviLet[1]
-                vremePoletanja = noviLet[3]
-                return polaziste, vremePoletanja
-
-    def mesta(self, nazivLeta):
-        letoviFile = open("letovi.txt", "r")
-        letoviRF = letoviFile.readlines()
-        lenLetovi = len(letoviRF)
-        for i in range(lenLetovi):
-            jedanLet = letoviRF[i]
-            noviLet = jedanLet.split("|")
-            if nazivLeta == noviLet[0]:
-                sedista = noviLet[7]
-                listaSedista = sedista.split("/")
-                brReda = eval(listaSedista[0])
-                brSedista = eval(listaSedista[1])
-                brojMestaUAvionu = brReda * brSedista
-                return brojMestaUAvionu
 
 
     def printKarte(self):
@@ -42,5 +17,12 @@ class Karta:
         print("Prezime putnika: ", self.prezimePutnika)
         print("Drzavljanstvo: ", self.drzavPutnika)
         print("Broj pasosa: ", self.brojPasosaPutnika)
-        print("Sediste: ", self.mesta(self.nazivLeta))
+        print("Sediste: jos nema, ali bice! ")
+        print("Datum leta: ", self.datumLeta)
         print("============\n")
+
+    def upisiKarte(self):
+        kartaStr = self.nazivLeta + "|" + self.imePutnika + "|" + self.prezimePutnika + "|" + self.drzavPutnika + "|" + self.brojPasosaPutnika + "|" + self.datumLeta + "\n"
+        karteFile = open("podaci/karte.txt", "a")
+        karteFile.write(kartaStr)
+        karteFile.close()
