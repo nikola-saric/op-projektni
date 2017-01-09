@@ -33,6 +33,7 @@ def prikaziLoginOpcije():
 def prikaziOpcijeKorisniku(uloga):
     PRETRAGA_LETOVA = 1
     UNOSENJE_NOVE_KARTE = 2
+    IZMENA_KARTE = 3
     BRISANJE_KARTE = 4
     LOG_OUT_KORISNIK = 5
     LOG_OUT_MENADZER = 3
@@ -54,6 +55,8 @@ def prikaziOpcijeKorisniku(uloga):
                 prikaziOpcijePretrageLetova(letServis)
             elif opcija == UNOSENJE_NOVE_KARTE:
                 prikaziOpcijeUnosenjaNoveKarte()
+            elif opcija == IZMENA_KARTE:
+                izmenaKarte()
             elif opcija == BRISANJE_KARTE:
                 brisanjeKarte()
             elif opcija == LOG_OUT_KORISNIK:
@@ -154,6 +157,18 @@ def prikaziOpcijeUnosenjaNoveKarte():
 
         else:
             print("Uneli ste nepostojecu opciju.")
+
+
+def izmenaKarte():
+    nazivLeta = input("Unesite naziv leta: ")
+    brojPasosaPutnika = input("Unesite broj pasosa putnika: ")
+    datumLeta = input("Unesite datum leta: ")
+    noviNazivLeta = input("Unesite novi naziv leta: ")
+    noviDatumLeta = input("Unesite novi datum leta: ")
+    stariPodaciLista = karte.izmeniKartu(nazivLeta, brojPasosaPutnika, datumLeta)
+    novaKarta = Karta(noviNazivLeta, stariPodaciLista[0], stariPodaciLista[1], stariPodaciLista[2], brojPasosaPutnika,
+                      noviDatumLeta)
+    Karta.upisiKarte(novaKarta)
 
 
 def brisanjeKarte():
