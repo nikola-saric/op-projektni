@@ -1,13 +1,16 @@
 import unittest
 from korisnik import *
 
-
 class TestKorisnik(unittest.TestCase):
     def setUp(self):
+        datoteka.test_mode = True
         self.korisnikServis = KorisnikServis()
 
+    def tearDown(self):
+        datoteka.test_mode = False
+
     def test_login_radi(self):
-        rezultat = self.korisnikServis.login("misa", "ds")
+        rezultat = self.korisnikServis.login("misa", "misa_sifra")
         assert rezultat == True
 
     def test_login_ne_radi(self):

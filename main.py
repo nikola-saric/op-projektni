@@ -1,13 +1,30 @@
 # Glavna metoda koja pokrece program!
 from korisnik import *
 from let import *
-from karte import *
-import karte
+from karta import *
+import karta
 
+# osnovne opcije programa
+PRETRAGA_LETOVA = 1
+UNOSENJE_NOVE_KARTE = 2
+IZMENA_KARTE = 3
+BRISANJE_KARTE = 4
+LOG_OUT_KORISNIK = 5
+LOG_OUT_MENADZER = 3
+GASENJE_PROGRAMA_KORISNIK = 6
+GASENJE_PROGRAMA_MENADZER = 4
+UNOSENJE_NOVIH_KARATA = 1
+STAMPANJE_UNETIH_NOVIH_KARATA = 2
+
+# opcije pretrage leta
+PRETRAGA_LETA_PO_POLAZISTU = 1
+PRETRAGA_LETA_PO_ODREDISTU = 2
+PRETRAGA_LETA_PO_VREMENU_POLETANJA = 3
+PRETRAGA_LETA_PO_VREMENU_SLETANJA = 4
+PRETRAGA_LETA_PO_PREVOZNIKU = 5
 
 def main():
     prikaziLoginOpcije()
-
 
 def prikaziLoginOpcije():
     ulogovan = False
@@ -29,16 +46,7 @@ def prikaziLoginOpcije():
             ulogovan = True
             prikaziOpcijeKorisniku(uloga)
 
-
 def prikaziOpcijeKorisniku(uloga):
-    PRETRAGA_LETOVA = 1
-    UNOSENJE_NOVE_KARTE = 2
-    IZMENA_KARTE = 3
-    BRISANJE_KARTE = 4
-    LOG_OUT_KORISNIK = 5
-    LOG_OUT_MENADZER = 3
-    GASENJE_PROGRAMA_KORISNIK = 6
-    GASENJE_PROGRAMA_MENADZER = 4
     opcija = 0
     letServis = LetServis()
 
@@ -84,12 +92,6 @@ def prikaziOpcijeKorisniku(uloga):
 
 
 def prikaziOpcijePretrageLetova(letServis):
-    PRETRAGA_LETA_PO_POLAZISTU = 1
-    PRETRAGA_LETA_PO_ODREDISTU = 2
-    PRETRAGA_LETA_PO_VREMENU_POLETANJA = 3
-    PRETRAGA_LETA_PO_VREMENU_SLETANJA = 4
-    PRETRAGA_LETA_PO_PREVOZNIKU = 5
-
     print("1 Pretrazite po polazistu.")
     print("2 Pretrazite po odredistu.")
     print("3 Pretrazite po vremenu poletanja.")
@@ -131,8 +133,6 @@ def prikaziOpcijePretrageLetova(letServis):
 
 
 def prikaziOpcijeUnosenjaNoveKarte():
-    UNOSENJE_NOVIH_KARATA = 1
-    STAMPANJE_UNETIH_NOVIH_KARATA = 2
     opcija = 0
     listaNovihKarata = []
 
@@ -154,7 +154,6 @@ def prikaziOpcijeUnosenjaNoveKarte():
             for novaKarta in listaNovihKarata:
                 Karta.upisiKarte(novaKarta)
                 Karta.printKarte(novaKarta)
-
         else:
             print("Uneli ste nepostojecu opciju.")
 
@@ -165,7 +164,7 @@ def izmenaKarte():
     datumLeta = input("Unesite datum leta: ")
     noviNazivLeta = input("Unesite novi naziv leta: ")
     noviDatumLeta = input("Unesite novi datum leta: ")
-    stariPodaciLista = karte.izmeniKartu(nazivLeta, brojPasosaPutnika, datumLeta)
+    stariPodaciLista = karta.izmeniKartu(nazivLeta, brojPasosaPutnika, datumLeta)
     novaKarta = Karta(noviNazivLeta, stariPodaciLista[0], stariPodaciLista[1], stariPodaciLista[2], brojPasosaPutnika,
                       noviDatumLeta)
     Karta.upisiKarte(novaKarta)
@@ -175,7 +174,6 @@ def brisanjeKarte():
     nazivLeta = input("Unesite naziv leta: ")
     brojPasosaPutnika = input("Unesite broj pasosa putnika: ")
     datumLeta = input("Unesite datum leta: ")
-    karte.obrisiKartu(nazivLeta, brojPasosaPutnika, datumLeta)
-
+    karta.obrisiKartu(nazivLeta, brojPasosaPutnika, datumLeta)
 
 main()

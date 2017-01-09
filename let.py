@@ -1,4 +1,5 @@
-import fileUtility
+import datoteka
+
 class LetServis:
 
     OPCIJA_PRETRAGE_POLAZISTE = "polaziste"
@@ -23,7 +24,7 @@ class LetServis:
 
         pronadjeniLetovi = []
 
-        letRedovi = fileUtility.procitajDatoteku("letovi.txt")
+        letRedovi = datoteka.procitaj_datoteku("letovi.txt")
         for let in letRedovi:
             letRed = let.split("|")
             if input == letRed[indexPolja]:

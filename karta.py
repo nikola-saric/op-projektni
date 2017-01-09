@@ -1,5 +1,5 @@
 # lista karata koje prodavac rezervise i koje se stampaju.
-import fileUtility
+import datoteka
 
 
 class Karta:
@@ -23,12 +23,12 @@ class Karta:
 
     def upisiKarte(self):
         kartaStr = self.nazivLeta + "|" + self.imePutnika + "|" + self.prezimePutnika + "|" + self.drzavPutnika + "|" + self.brojPasosaPutnika + "|" + self.datumLeta + "\n"
-        fileUtility.upisiUDatoteku("karte.txt", kartaStr)
+        datoteka.upisi_u_datoteku("karte.txt", kartaStr)
 
 
 def obrisiKartu(nazivLetaKarta, brojPasosaKarta, datumKarta):
     nepostojecaKarta = True
-    karteRedovi = fileUtility.procitajDatoteku("karte.txt")
+    karteRedovi = datoteka.procitaj_datoteku("karte.txt")
     for kartaRed in karteRedovi:
         karta = kartaRed.split("|")
         if (karta[0] == nazivLetaKarta) and (karta[4] == brojPasosaKarta) and (karta[5] == datumKarta):
@@ -51,7 +51,7 @@ def izmeniKartu(nazivLetaKarta, brojPasosaKarta, datumKarta):
     staroIme = ""
     staroPrezime = ""
     staroDrzavljanstvo = ""
-    karteRedovi = fileUtility.procitajDatoteku("karte.txt")
+    karteRedovi = datoteka.procitaj_datoteku("karte.txt")
     for kartaRed in karteRedovi:
         karta = kartaRed.split("|")
         if (karta[0] == nazivLetaKarta) and (karta[4] == brojPasosaKarta) and (karta[5] == datumKarta):

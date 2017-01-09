@@ -1,4 +1,4 @@
-import fileUtility
+import datoteka
 
 class Korisnik:
 
@@ -13,7 +13,7 @@ class KorisnikServis:
 
     # funkcija vraca True ako su kredencijali tacni, False ako nisu
     def login(self, korisnickoImeInput, lozinkaInput):
-        korisniciRedovi = fileUtility.procitajDatoteku("korisnici.txt")
+        korisniciRedovi = datoteka.procitaj_datoteku("korisnici.txt")
         korisnickaImena = []
 
         for i in range(len(korisniciRedovi)):
@@ -29,7 +29,7 @@ class KorisnikServis:
         if pronadjenoKorisnickoIme == "":
             return False
 
-        lozinke = fileUtility.procitajDatoteku("lozinke.txt")
+        lozinke = datoteka.procitaj_datoteku("lozinke.txt")
         for lozinkaRed in lozinke:
             red = lozinkaRed.split("|")
             korisnickoIme = red[0]
@@ -40,7 +40,7 @@ class KorisnikServis:
         return False
 
     def vratiUlogu(self, korisnickoIme):
-        korisniciRedovi = fileUtility.procitajDatoteku("korisnici.txt")
+        korisniciRedovi = datoteka.procitaj_datoteku("korisnici.txt")
         for korisnik in korisniciRedovi:
             korisnikPodaci = korisnik.split("|")
             if korisnikPodaci[0] == korisnickoIme:

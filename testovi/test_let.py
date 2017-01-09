@@ -1,10 +1,14 @@
 import unittest
 from let import *
 
-
 class TestLet(unittest.TestCase):
+
     def setUp(self):
+        datoteka.test_mode = True
         self.letServis = LetServis()
+
+    def tearDown(self):
+        datoteka.test_mode = False
 
     def test_pretraga_po_polazistu_radi(self):
         pronadjeniLetovi = self.letServis.pretragaLeta("KZN", LetServis.OPCIJA_PRETRAGE_POLAZISTE)
@@ -17,7 +21,7 @@ class TestLet(unittest.TestCase):
         pronadjeniLetovi = self.letServis.pretragaLeta("LED", LetServis.OPCIJA_PRETRAGE_ODREDISTE)
         assert len(pronadjeniLetovi) == 184
 
-        pronadjeniLetovi2 = self.letServis.pretragaLeta("NE_POSTOJI", LetServis.OPCIJA_PRETRAGE_ODREDISTE)
+        pronadjeniLetovi2 = self.letServis.pretragaLeta("Abrakadabra", LetServis.OPCIJA_PRETRAGE_ODREDISTE)
         assert len(pronadjeniLetovi2) == 0
 
     def test_pretraga_po_vremenu_poletanja_radi(self):
@@ -38,5 +42,6 @@ class TestLet(unittest.TestCase):
         pronadjeniLetovi = self.letServis.pretragaLeta("Aero Flight", LetServis.OPCIJA_PRETRAGE_PREVOZNIKU)
         assert len(pronadjeniLetovi) == 34
 
-        pronadjeniLetovi2 = self.letServis.pretragaLeta("NE_POSTOJI", LetServis.OPCIJA_PRETRAGE_PREVOZNIKU)
+        pronadjeniLetovi2 = self.letServis.pretragaLeta("Macak u cizmama", LetServis.OPCIJA_PRETRAGE_PREVOZNIKU)
         assert len(pronadjeniLetovi2) == 0
+
