@@ -1,5 +1,6 @@
 import datoteka
 
+
 class LetServis:
 
     OPCIJA_PRETRAGE_POLAZISTE = "polaziste"
@@ -8,7 +9,7 @@ class LetServis:
     OPCIJA_PRETRAGE_VREME_SLETANJA = "vreme sletanja"
     OPCIJA_PRETRAGE_PREVOZNIKU = "prevoznik"
 
-    def pretragaLeta(self, input, opcijaPretrage):
+    def pretraga_leta(self, input, opcijaPretrage):
         indexPolja = -1
 
         if opcijaPretrage == LetServis.OPCIJA_PRETRAGE_POLAZISTE:

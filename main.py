@@ -2,7 +2,6 @@
 from korisnik import *
 from let import *
 from karta import *
-import karta
 
 # osnovne opcije programa
 PRETRAGA_LETOVA = 1
@@ -24,9 +23,9 @@ PRETRAGA_LETA_PO_VREMENU_SLETANJA = 4
 PRETRAGA_LETA_PO_PREVOZNIKU = 5
 
 def main():
-    prikaziLoginOpcije()
+    prikazi_login_opcije()
 
-def prikaziLoginOpcije():
+def prikazi_login_opcije():
     ulogovan = False
     korisnikServis = KorisnikServis()
 
@@ -41,12 +40,12 @@ def prikaziLoginOpcije():
 
         else:
             print("Uspesno ste se ulogovali na sistem.")
-            uloga = korisnikServis.vratiUlogu(korisnickoIme)
+            uloga = korisnikServis.vrati_ulogu(korisnickoIme)
             print("Vasa uloga je: ", uloga)
             ulogovan = True
-            prikaziOpcijeKorisniku(uloga)
+            prikazi_opcije_korisniku(uloga)
 
-def prikaziOpcijeKorisniku(uloga):
+def prikazi_opcije_korisniku(uloga):
     opcija = 0
     letServis = LetServis()
 
@@ -60,15 +59,15 @@ def prikaziOpcijeKorisniku(uloga):
             print("6 Ugasite program.")
             opcija = eval(input("Unesite zeljenu opciju: "))
             if opcija == PRETRAGA_LETOVA:
-                prikaziOpcijePretrageLetova(letServis)
+                prikazi_opcije_pretrage_letova(letServis)
             elif opcija == UNOSENJE_NOVE_KARTE:
-                prikaziOpcijeUnosenjaNoveKarte()
+                prikazi_opcije_unosenja_nove_karte()
             elif opcija == IZMENA_KARTE:
-                izmenaKarte()
+                izmena_karte()
             elif opcija == BRISANJE_KARTE:
-                brisanjeKarte()
+                brisanje_karte()
             elif opcija == LOG_OUT_KORISNIK:
-                prikaziLoginOpcije()
+                prikazi_login_opcije()
             elif opcija == GASENJE_PROGRAMA_KORISNIK:
                 break
             else:
@@ -82,16 +81,16 @@ def prikaziOpcijeKorisniku(uloga):
             print("4 Ugasite program.")
             opcija = eval(input("Unesite zeljenu opciju: "))
             if opcija == PRETRAGA_LETOVA:
-                prikaziOpcijePretrageLetova(letServis)
+                prikazi_opcije_pretrage_letova(letServis)
             elif opcija == LOG_OUT_MENADZER:
-                prikaziLoginOpcije()
+                prikazi_login_opcije()
             elif opcija == GASENJE_PROGRAMA_MENADZER:
                 break
             else:
                 print("Uneli ste nepostojecu opciju.")
 
 
-def prikaziOpcijePretrageLetova(letServis):
+def prikazi_opcije_pretrage_letova(letServis):
     print("1 Pretrazite po polazistu.")
     print("2 Pretrazite po odredistu.")
     print("3 Pretrazite po vremenu poletanja.")
@@ -101,38 +100,38 @@ def prikaziOpcijePretrageLetova(letServis):
 
     if opcija == PRETRAGA_LETA_PO_POLAZISTU:
         polaziste = input("Unesite polaziste: ")
-        rezultatPretrage = letServis.pretragaLeta(polaziste, LetServis.OPCIJA_PRETRAGE_POLAZISTE)
+        rezultatPretrage = letServis.pretraga_leta(polaziste, LetServis.OPCIJA_PRETRAGE_POLAZISTE)
         for let in rezultatPretrage:
             print(let)
 
     elif opcija == PRETRAGA_LETA_PO_ODREDISTU:
         odrediste = input("Unesite odrediste: ")
-        rezultatPretrage = letServis.pretragaLeta(odrediste, letServis.OPCIJA_PRETRAGE_ODREDISTE)
+        rezultatPretrage = letServis.pretraga_leta(odrediste, letServis.OPCIJA_PRETRAGE_ODREDISTE)
         for let in rezultatPretrage:
             print(let)
 
     elif opcija == PRETRAGA_LETA_PO_VREMENU_POLETANJA:
         vremePoletanja = input("Unesite vreme poletanja: ")
-        rezultatPretrage = letServis.pretragaLeta(vremePoletanja, letServis.OPCIJA_PRETRAGE_VREME_POLETANJA)
+        rezultatPretrage = letServis.pretraga_leta(vremePoletanja, letServis.OPCIJA_PRETRAGE_VREME_POLETANJA)
         for let in rezultatPretrage:
             print(let)
 
     elif opcija == PRETRAGA_LETA_PO_VREMENU_SLETANJA:
         vremeSletanja = input("Unesite vreme sletanja: ")
-        rezultatPretrage = letServis.pretragaLeta(vremeSletanja, letServis.OPCIJA_PRETRAGE_VREME_SLETANJA)
+        rezultatPretrage = letServis.pretraga_leta(vremeSletanja, letServis.OPCIJA_PRETRAGE_VREME_SLETANJA)
         for let in rezultatPretrage:
             print(let)
 
     elif opcija == PRETRAGA_LETA_PO_PREVOZNIKU:
         prevoznik = input("Unesite naziv prevoznika: ")
-        rezultatPretrage = letServis.pretragaLeta(prevoznik, letServis.OPCIJA_PRETRAGE_PREVOZNIKU)
+        rezultatPretrage = letServis.pretraga_leta(prevoznik, letServis.OPCIJA_PRETRAGE_PREVOZNIKU)
         for let in rezultatPretrage:
             print(let)
     else:
         print("Uneli ste nepostojecu opciju.")
 
 
-def prikaziOpcijeUnosenjaNoveKarte():
+def prikazi_opcije_unosenja_nove_karte():
     opcija = 0
     listaNovihKarata = []
 
@@ -152,28 +151,28 @@ def prikaziOpcijeUnosenjaNoveKarte():
 
         elif opcija == STAMPANJE_UNETIH_NOVIH_KARATA:
             for novaKarta in listaNovihKarata:
-                Karta.upisiKarte(novaKarta)
-                Karta.printKarte(novaKarta)
+                Karta.upisi_karte(novaKarta)
+                Karta.print_karte(novaKarta)
         else:
             print("Uneli ste nepostojecu opciju.")
 
 
-def izmenaKarte():
+def izmena_karte():
     nazivLeta = input("Unesite naziv leta: ")
     brojPasosaPutnika = input("Unesite broj pasosa putnika: ")
     datumLeta = input("Unesite datum leta: ")
     noviNazivLeta = input("Unesite novi naziv leta: ")
     noviDatumLeta = input("Unesite novi datum leta: ")
-    stariPodaciLista = karta.izmeniKartu(nazivLeta, brojPasosaPutnika, datumLeta)
+    stariPodaciLista = KartaServis.izmeni_kartu(nazivLeta, brojPasosaPutnika, datumLeta)
     novaKarta = Karta(noviNazivLeta, stariPodaciLista[0], stariPodaciLista[1], stariPodaciLista[2], brojPasosaPutnika,
                       noviDatumLeta)
-    Karta.upisiKarte(novaKarta)
+    Karta.upisi_karte(novaKarta)
 
 
-def brisanjeKarte():
+def brisanje_karte():
     nazivLeta = input("Unesite naziv leta: ")
     brojPasosaPutnika = input("Unesite broj pasosa putnika: ")
     datumLeta = input("Unesite datum leta: ")
-    karta.obrisiKartu(nazivLeta, brojPasosaPutnika, datumLeta)
+    KartaServis.obrisi_kartu(nazivLeta, brojPasosaPutnika, datumLeta)
 
 main()

@@ -39,7 +39,7 @@ class KorisnikServis:
 
         return False
 
-    def vratiUlogu(self, korisnickoIme):
+    def vrati_ulogu(self, korisnickoIme):
         korisniciRedovi = datoteka.procitaj_datoteku("korisnici.txt")
         for korisnik in korisniciRedovi:
             korisnikPodaci = korisnik.split("|")

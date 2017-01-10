@@ -11,7 +11,7 @@ class Karta:
         self.brojPasosaPutnika = brojPasosaPutnika
         self.datumLeta = datumLeta
 
-    def printKarte(self):
+    def print_karte(self):
         print("Let: ", self.nazivLeta)
         print("Ime putnika: ", self.imePutnika)
         print("Prezime putnika: ", self.prezimePutnika)
@@ -21,52 +21,53 @@ class Karta:
         print("Datum leta: ", self.datumLeta)
         print("============\n")
 
-    def upisiKarte(self):
+    def upisi_karte(self):
         kartaStr = self.nazivLeta + "|" + self.imePutnika + "|" + self.prezimePutnika + "|" + self.drzavPutnika + "|" + self.brojPasosaPutnika + "|" + self.datumLeta + "\n"
         datoteka.upisi_u_datoteku("karte.txt", kartaStr)
 
 
-def obrisiKartu(nazivLetaKarta, brojPasosaKarta, datumKarta):
-    nepostojecaKarta = True
-    karteRedovi = datoteka.procitaj_datoteku("karte.txt")
-    for kartaRed in karteRedovi:
-        karta = kartaRed.split("|")
-        if (karta[0] == nazivLetaKarta) and (karta[4] == brojPasosaKarta) and (karta[5] == datumKarta):
-            karteRedovi.remove(kartaRed)
-            nepostojecaKarta = False
-
-    if nepostojecaKarta == True:
-        print("Ne postoji karta sa tim podacima.")
-    else:
-        print("Karta je obrisana.")
-
-    karteFile = open("podaci/karte.txt", "w")
-    for kartaRed in karteRedovi:
-        karteFile.write("%s\n" % (kartaRed))
-    karteFile.close()
-
-
-def izmeniKartu(nazivLetaKarta, brojPasosaKarta, datumKarta):
-    nepostojecaKarta = True
-    staroIme = ""
-    staroPrezime = ""
-    staroDrzavljanstvo = ""
-    karteRedovi = datoteka.procitaj_datoteku("karte.txt")
-    for kartaRed in karteRedovi:
-        karta = kartaRed.split("|")
-        if (karta[0] == nazivLetaKarta) and (karta[4] == brojPasosaKarta) and (karta[5] == datumKarta):
-            staroIme = karta[1]
-            staroPrezime = karta[2]
-            staroDrzavljanstvo = karta[3]
-            karteRedovi.remove(kartaRed)
-            nepostojecaKarta = False
+class KartaServis():
+    def obrisi_kartu(nazivLetaKarta, brojPasosaKarta, datumKarta):
+        nepostojecaKarta = True
+        karteRedovi = datoteka.procitaj_datoteku("karte.txt")
+        for kartaRed in karteRedovi:
+            karta = kartaRed.split("|")
+            if (karta[0] == nazivLetaKarta) and (karta[4] == brojPasosaKarta) and (karta[5] == datumKarta):
+                karteRedovi.remove(kartaRed)
+                nepostojecaKarta = False
 
         if nepostojecaKarta == True:
             print("Ne postoji karta sa tim podacima.")
         else:
-            print("Karta je izmenjena.")
+            print("Karta je obrisana.")
+
         karteFile = open("podaci/karte.txt", "w")
         for kartaRed in karteRedovi:
-            karteFile.write("%s\n" % (kartaRed))
+            karteFile.write("%s\n" % kartaRed)
         karteFile.close()
-    return staroIme, staroPrezime, staroDrzavljanstvo
+
+    def izmeni_kartu(nazivLetaKarta, brojPasosaKarta, datumKarta):
+
+        nepostojecaKarta = True
+        staroIme = ""
+        staroPrezime = ""
+        staroDrzavljanstvo = ""
+        karteRedovi = datoteka.procitaj_datoteku("karte.txt")
+        for kartaRed in karteRedovi:
+            karta = kartaRed.split("|")
+            if (karta[0] == nazivLetaKarta) and (karta[4] == brojPasosaKarta) and (karta[5] == datumKarta):
+                staroIme = karta[1]
+                staroPrezime = karta[2]
+                staroDrzavljanstvo = karta[3]
+                karteRedovi.remove(kartaRed)
+                nepostojecaKarta = False
+
+            if nepostojecaKarta == True:
+                print("Ne postoji karta sa tim podacima.")
+            else:
+                print("Karta je izmenjena.")
+            karteFile = open("podaci/karte.txt", "w")
+            for kartaRed in karteRedovi:
+                karteFile.write("%s\n" % (kartaRed))
+            karteFile.close()
+        return staroIme, staroPrezime, staroDrzavljanstvo

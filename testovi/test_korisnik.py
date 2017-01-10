@@ -18,9 +18,9 @@ class TestKorisnik(unittest.TestCase):
         assert rezultat == False
 
     def test_vraca_korektnu_ulogu(self):
-        uloga = self.korisnikServis.vratiUlogu("misa")
+        uloga = self.korisnikServis.vrati_ulogu("misa")
         assert uloga == "menadzer"
 
     def test_vraca_none_za_nepostojeceg_korisnika(self):
-        uloga = self.korisnikServis.vratiUlogu("jackie")
+        uloga = self.korisnikServis.vrati_ulogu("jackie")
         assert uloga is None
