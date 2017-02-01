@@ -21,9 +21,13 @@ PRETRAGA_LETA_PO_ODREDISTU = 2
 PRETRAGA_LETA_PO_VREMENU_POLETANJA = 3
 PRETRAGA_LETA_PO_VREMENU_SLETANJA = 4
 PRETRAGA_LETA_PO_PREVOZNIKU = 5
+# izmena karte
+KARTA_NE_POSTOJI = 1
+
 
 def main():
     prikazi_login_opcije()
+
 
 def prikazi_login_opcije():
     ulogovan = False
@@ -43,9 +47,10 @@ def prikazi_login_opcije():
             uloga = korisnikServis.vrati_ulogu(korisnickoIme)
             print("Vasa uloga je: ", uloga)
             ulogovan = True
-            prikazi_opcije_korisniku(uloga)
+            prikazi_opcije_korisniku(uloga, korisnickoIme, korisnikServis)
 
-def prikazi_opcije_korisniku(uloga):
+
+def prikazi_opcije_korisniku(uloga, korisnickoIme, korisnikServis):
     opcija = 0
     letServis = LetServis()
 
@@ -61,7 +66,7 @@ def prikazi_opcije_korisniku(uloga):
             if opcija == PRETRAGA_LETOVA:
                 prikazi_opcije_pretrage_letova(letServis)
             elif opcija == UNOSENJE_NOVE_KARTE:
-                prikazi_opcije_unosenja_nove_karte()
+                prikazi_opcije_unosenja_nove_karte(korisnickoIme, korisnikServis)
             elif opcija == IZMENA_KARTE:
                 izmena_karte()
             elif opcija == BRISANJE_KARTE:
@@ -131,7 +136,7 @@ def prikazi_opcije_pretrage_letova(letServis):
         print("Uneli ste nepostojecu opciju.")
 
 
-def prikazi_opcije_unosenja_nove_karte():
+def prikazi_opcije_unosenja_nove_karte(korisnickoIme, korisnikServis):
     opcija = 0
     listaNovihKarata = []
 
@@ -146,7 +151,9 @@ def prikazi_opcije_unosenja_nove_karte():
             drzavljanstvoPutnika = input("Unesite drzavljanstvo putnika: ")
             brojPasosaPutnika = input("Unesite broj pasosa putnika: ")
             datumLeta = input("Unesite datum leta: ")
-            novaKarta = Karta(nazivLeta, imePutnika, prezimePutnika, drzavljanstvoPutnika, brojPasosaPutnika, datumLeta)
+            imeProdavca = korisnikServis.vrati_ime(korisnickoIme)
+            novaKarta = Karta(nazivLeta, imePutnika, prezimePutnika, drzavljanstvoPutnika, brojPasosaPutnika, datumLeta,
+                              imeProdavca)
             listaNovihKarata.append(novaKarta)
 
         elif opcija == STAMPANJE_UNETIH_NOVIH_KARATA:
@@ -164,15 +171,25 @@ def izmena_karte():
     noviNazivLeta = input("Unesite novi naziv leta: ")
     noviDatumLeta = input("Unesite novi datum leta: ")
     stariPodaciLista = KartaServis.izmeni_kartu(nazivLeta, brojPasosaPutnika, datumLeta)
-    novaKarta = Karta(noviNazivLeta, stariPodaciLista[0], stariPodaciLista[1], stariPodaciLista[2], brojPasosaPutnika,
-                      noviDatumLeta)
-    Karta.upisi_karte(novaKarta)
+    if stariPodaciLista[4] == KARTA_NE_POSTOJI:
+        print("Ne postoji karta sa tim podacima.")
+    else:
+        novaKarta = Karta(noviNazivLeta, stariPodaciLista[0], stariPodaciLista[1], stariPodaciLista[2],
+                          brojPasosaPutnika,
+                          noviDatumLeta, stariPodaciLista[3])
+        Karta.upisi_karte(novaKarta)
+        print("Karta je izmenjena.")
 
 
 def brisanje_karte():
     nazivLeta = input("Unesite naziv leta: ")
     brojPasosaPutnika = input("Unesite broj pasosa putnika: ")
     datumLeta = input("Unesite datum leta: ")
-    KartaServis.obrisi_kartu(nazivLeta, brojPasosaPutnika, datumLeta)
+    nepostojecaKarta = KartaServis.obrisi_kartu(nazivLeta, brojPasosaPutnika, datumLeta)
+    if nepostojecaKarta == True:
+        print("Ne postoji karta sa tim podacima.")
+    else:
+        print("Karta je obrisana.")
+
 
 main()

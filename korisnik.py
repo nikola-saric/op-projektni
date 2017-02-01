@@ -46,4 +46,11 @@ class KorisnikServis:
             if korisnikPodaci[0] == korisnickoIme:
                 return korisnikPodaci[3]
 
+    def vrati_ime(self, korisnickoIme):
+        korisniciRedovi = datoteka.procitaj_datoteku("korisnici.txt")
+        for korisnik in korisniciRedovi:
+            korisnikPodaci = korisnik.split("|")
+            if korisnikPodaci[0] == korisnickoIme:
+                return korisnikPodaci[1]
+
         return None
