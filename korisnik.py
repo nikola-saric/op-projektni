@@ -1,5 +1,5 @@
 import datoteka
-
+# ne koristi se, moze se izbrisati
 class Korisnik:
 
     def __init__(self, korisnickoIme, lozinka, ime, prezime, uloga):

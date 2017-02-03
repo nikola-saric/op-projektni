@@ -1,7 +1,8 @@
 # Glavna metoda koja pokrece program!
+from karta import *
 from korisnik import *
 from let import *
-from karta import *
+import datoteka
 
 # osnovne opcije programa
 PRETRAGA_LETOVA = 1
@@ -151,14 +152,16 @@ def prikazi_opcije_unosenja_nove_karte(korisnickoIme, korisnikServis):
             drzavljanstvoPutnika = input("Unesite drzavljanstvo putnika: ")
             brojPasosaPutnika = input("Unesite broj pasosa putnika: ")
             datumLeta = input("Unesite datum leta: ")
+            KartaServis.prikazi_slobodna_sedista(nazivLeta, datumLeta)
+            mesto = input("Unesite slobodno sediste: ")
             imeProdavca = korisnikServis.vrati_ime(korisnickoIme)
             novaKarta = Karta(nazivLeta, imePutnika, prezimePutnika, drzavljanstvoPutnika, brojPasosaPutnika, datumLeta,
-                              imeProdavca)
+                              mesto, imeProdavca)
             listaNovihKarata.append(novaKarta)
+            Karta.upisi_karte(novaKarta)
 
         elif opcija == STAMPANJE_UNETIH_NOVIH_KARATA:
             for novaKarta in listaNovihKarata:
-                Karta.upisi_karte(novaKarta)
                 Karta.print_karte(novaKarta)
         else:
             print("Uneli ste nepostojecu opciju.")
@@ -191,5 +194,7 @@ def brisanje_karte():
     else:
         print("Karta je obrisana.")
 
+
+# def prikazi_slobodna_sedista(nazivLeta, datumLeta):
 
 main()
