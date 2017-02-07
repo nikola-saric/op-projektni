@@ -4,7 +4,7 @@ import datoteka
 
 class Karta:
     def __init__(self, nazivLeta, imePutnika, prezimePutnika, drzavPutnika, brojPasosaPutnika, datumLeta, sediste,
-                 imeProdavca):
+                 imeProdavca, datumIzdavanja):
         self.nazivLeta = nazivLeta
         self.imePutnika = imePutnika
         self.prezimePutnika = prezimePutnika
@@ -13,6 +13,7 @@ class Karta:
         self.datumLeta = datumLeta
         self.sediste = sediste
         self.imeProdavca = imeProdavca
+        self.datumIzdavanja = datumIzdavanja
 
     def print_karte(self):
         print("Let: ", self.nazivLeta)
@@ -23,10 +24,11 @@ class Karta:
         print("Datum leta: ", self.datumLeta)
         print("Vase sediste je: ", self.sediste)
         print("Ime prodavca: ", self.imeProdavca)
+        print("Datum izdavanja: ", self.datumIzdavanja)
         print("============\n")
 
     def upisi_karte(self):
-        kartaStr = self.nazivLeta + "|" + self.imePutnika + "|" + self.prezimePutnika + "|" + self.drzavPutnika + "|" + self.brojPasosaPutnika + "|" + self.datumLeta + "|" + self.sediste + "|" + self.imeProdavca + "\n"
+        kartaStr = self.nazivLeta + "|" + self.imePutnika + "|" + self.prezimePutnika + "|" + self.drzavPutnika + "|" + self.brojPasosaPutnika + "|" + self.datumLeta + "|" + self.sediste + "|" + self.imeProdavca + "|" + self.datumIzdavanja + "\n"
         datoteka.upisi_u_datoteku("karte.txt", kartaStr)
 
 
@@ -54,6 +56,7 @@ class KartaServis():
         staroPrezime = ""
         staroDrzavljanstvo = ""
         staroImeProdavca = ""
+        stariDatumIzdavanja = ""
         karteRedovi = datoteka.procitaj_datoteku("karte.txt")
         for kartaRed in karteRedovi:
             karta = kartaRed.split("|")
@@ -61,17 +64,18 @@ class KartaServis():
                 staroIme = karta[1]
                 staroPrezime = karta[2]
                 staroDrzavljanstvo = karta[3]
-                staroImeProdavca = karta[7]
+                staroImeProdavca = karta[8]
+                stariDatumIzdavanja = karta[7]
                 karteRedovi.remove(kartaRed)
                 nepostojecaKarta = KARTA_POSTOJI
 
                 karteFile = open("podaci/karte.txt", "w")
                 for kartaRed in karteRedovi:
-                    karteFile.write("%s\n" % (kartaRed))
+                    karteFile.write("%s\n" % kartaRed)
                 karteFile.close()
-                return staroIme, staroPrezime, staroDrzavljanstvo, staroImeProdavca, nepostojecaKarta
+                return staroIme, staroPrezime, staroDrzavljanstvo, staroImeProdavca, stariDatumIzdavanja, nepostojecaKarta
 
-        return staroIme, staroPrezime, staroDrzavljanstvo, staroImeProdavca, KARTA_NE_POSTOJI
+        return staroIme, staroPrezime, staroDrzavljanstvo, staroImeProdavca, stariDatumIzdavanja, KARTA_NE_POSTOJI
 
     def zauzeta_sedista(nazivLeta, datumLeta):
         zauzetaMesta = []
@@ -108,3 +112,43 @@ class KartaServis():
                     slobodnoSediste = "X"
                 print("|" + slobodnoSediste + "|", end=" ")
             print()
+
+    def prodate_karte_za_izabrani_dan_prodaje_ili_polaska(izabraniDan, izabranaOpcija):
+        DAN_PRODAJE = 1
+        DAN_POLASKA = 2
+        indexPolja = -1
+        if izabranaOpcija == DAN_PRODAJE:
+            indexPolja = 8
+        elif izabranaOpcija == DAN_POLASKA:
+            indexPolja = 5
+
+        pronadjeneKarte = []
+
+        karteRedovi = datoteka.procitaj_datoteku("karte.txt")
+        for karta in karteRedovi:
+            kartaRed = karta.split("|")
+            if izabraniDan == kartaRed[indexPolja]:
+                pronadjeneKarte.append(karta)
+
+        return pronadjeneKarte
+
+    def prodate_karte_za_izabrani_dan_prodaje_i_izabranog_prodavca(izabraniDan, izabraniProdavac):
+        DAN_PRODAJE = 8
+        PRODAVAC = 7
+
+        pronadjeneKarte = []
+
+        karteRedovi = datoteka.procitaj_datoteku("karte.txt")
+        for karta in karteRedovi:
+            kartaRed = karta.split("|")
+            if (izabraniDan == kartaRed[DAN_PRODAJE]) and (izabraniProdavac == kartaRed[PRODAVAC]):
+                pronadjeneKarte.append(karta)
+        return pronadjeneKarte
+
+    def prikazi_karte(pronadjeneKarte):
+
+        for pronadjenaKarta in pronadjeneKarte:
+            kartaLista = pronadjenaKarta.split("|")
+            karta = Karta(kartaLista[0], kartaLista[1], kartaLista[2], kartaLista[3], kartaLista[4], kartaLista[5],
+                          kartaLista[6], kartaLista[7], kartaLista[8])
+            Karta.print_karte(karta)

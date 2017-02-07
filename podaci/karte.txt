@@ -1,9 +1,7 @@
-AA0001|Milivoje|Milic|SRB|srb1|1.2.2017.|3A|Zivojin
-AA9324|Mirko|Mrkic|SAD|sad31|21.12.2017.|1B|Zivojin
-AA3425|Reno|Jackson|SAD|sad313|12.11.2017.|5C|Zivojin
-AA4424|Zarko|Zarkic|SRB|srb32|4.2.2017.|8A|Milos
-AA0002|Nikola|Nikic|SRB|srb2|2.2.2017.|2B|Zivojin
-AA0002|Nikola|Nik|SRb|srb2|2.2.2017.|10A|Zivojin
-AA3425|Marko|Jacksic|SAD|sad32|21.11.2017.|24C|Zivojin
-AA0002|Mirko|Mirkovic|SRB|srb232|2.2.2017.|10B|Milos
-AA0002|Zivko|Zivkic|SAD|sad2314|2.2.2017.|8C|Milos
+AA0003|Mirko|Mrkic|SRB|srb2414|2.2.2017.|10A|Zivojin|02/05/17
+AA0003|Darko|Darkic|SRB|5252|2.2.2017.|11A|Zivojin|02/05/17
+AA0009|Marko|Markic|SAD|sad2352652|2.2.2017.|17A|Zivojin|02/05/17
+AA0003|Milos|Milic|SRB|srb423525|2.2.2017.|9A|Milos|02/05/17
+AA5243|Jack|Jackson|SAD|sad1512|1.2.2017.|10D|02/05/17|Milos
+AA0505|Marko|Darkic|SRb|srb23425|2.11.2017.|3A|Zivojin|02/07/17
+AA0550|Darko|Markic|SRB|srb23523|2.3.2017.|7E|Zivojin|02/07/17

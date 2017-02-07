@@ -3,6 +3,7 @@ from karta import *
 from korisnik import *
 from let import *
 import datoteka
+import time
 
 # osnovne opcije programa
 PRETRAGA_LETOVA = 1
@@ -15,6 +16,7 @@ GASENJE_PROGRAMA_KORISNIK = 6
 GASENJE_PROGRAMA_MENADZER = 4
 UNOSENJE_NOVIH_KARATA = 1
 STAMPANJE_UNETIH_NOVIH_KARATA = 2
+IZVESTAJ_O_PRODATIM_KARTAMA = 2
 
 # opcije pretrage leta
 PRETRAGA_LETA_PO_POLAZISTU = 1
@@ -24,6 +26,14 @@ PRETRAGA_LETA_PO_VREMENU_SLETANJA = 4
 PRETRAGA_LETA_PO_PREVOZNIKU = 5
 # izmena karte
 KARTA_NE_POSTOJI = 1
+# opcije izvestaja o prodatim kartama
+PRODATE_KARTE_ZA_IZABRANI_DAN_PRODAJE = 1
+PRODATE_KARTE_ZA_IZABRANI_DAN_POLASKA = 2
+PRODATE_KARTE_ZA_IZABRANI_DAN_PRODAJE_I_IZABRANOG_PRODAVCA = 3
+UKUPAN_BROJ_I_CENA_PRODATIH_KARATA_ZA_IZABRANI_DAN_PRODAJE = 4
+UKUPAN_BROJ_I_CENA_PRODATIH_KARATA_ZA_IZABRANI_DAN_POLASKA = 5
+UKUPAN_BROJ_I_CENA_PRODATIH_KARATA_ZA_IZABRANI_DAN_PRODAJE_I_IZABRANOG_PRODAVCA = 6
+UKUPAN_BROJ_I_CENA_PRODATIH_KARATA_U_POSLEDNJIH_30_DANA_PO_PRODAVCIMA = 7
 
 
 def main():
@@ -88,6 +98,8 @@ def prikazi_opcije_korisniku(uloga, korisnickoIme, korisnikServis):
             opcija = eval(input("Unesite zeljenu opciju: "))
             if opcija == PRETRAGA_LETOVA:
                 prikazi_opcije_pretrage_letova(letServis)
+            elif opcija == IZVESTAJ_O_PRODATIM_KARTAMA:
+                prikazi_opcije_izvestaja()
             elif opcija == LOG_OUT_MENADZER:
                 prikazi_login_opcije()
             elif opcija == GASENJE_PROGRAMA_MENADZER:
@@ -155,8 +167,9 @@ def prikazi_opcije_unosenja_nove_karte(korisnickoIme, korisnikServis):
             KartaServis.prikazi_slobodna_sedista(nazivLeta, datumLeta)
             mesto = input("Unesite slobodno sediste: ")
             imeProdavca = korisnikServis.vrati_ime(korisnickoIme)
+            datumIzdavanja = time.strftime("%x")
             novaKarta = Karta(nazivLeta, imePutnika, prezimePutnika, drzavljanstvoPutnika, brojPasosaPutnika, datumLeta,
-                              mesto, imeProdavca)
+                              mesto, imeProdavca, datumIzdavanja)
             listaNovihKarata.append(novaKarta)
             Karta.upisi_karte(novaKarta)
 
@@ -173,13 +186,15 @@ def izmena_karte():
     datumLeta = input("Unesite datum leta: ")
     noviNazivLeta = input("Unesite novi naziv leta: ")
     noviDatumLeta = input("Unesite novi datum leta: ")
+    KartaServis.prikazi_slobodna_sedista(noviNazivLeta, noviDatumLeta)
+    novoSediste = input("Unesite novo sediste: ")
     stariPodaciLista = KartaServis.izmeni_kartu(nazivLeta, brojPasosaPutnika, datumLeta)
-    if stariPodaciLista[4] == KARTA_NE_POSTOJI:
+    if stariPodaciLista[5] == KARTA_NE_POSTOJI:
         print("Ne postoji karta sa tim podacima.")
     else:
         novaKarta = Karta(noviNazivLeta, stariPodaciLista[0], stariPodaciLista[1], stariPodaciLista[2],
                           brojPasosaPutnika,
-                          noviDatumLeta, stariPodaciLista[3])
+                          noviDatumLeta, novoSediste, stariPodaciLista[3], stariPodaciLista[4])
         Karta.upisi_karte(novaKarta)
         print("Karta je izmenjena.")
 
@@ -195,6 +210,36 @@ def brisanje_karte():
         print("Karta je obrisana.")
 
 
-# def prikazi_slobodna_sedista(nazivLeta, datumLeta):
+def prikazi_opcije_izvestaja():
+    print("1 Lista prodatih karata za izabrani dan prodaje.")
+    print("2 Lista prodatih karata za izabrani dan polaska.")
+    print("3 Lista prodatih karata za izabrani dan prodaje i izabranog prodavca.")
+    print("4 Ukupan broj i cena prodatih karata za izabrani dan prodaje.")
+    print("5 Ukupan broj i cena prodatih karata za izabrani dan polaska.")
+    print("6 Ukupan broj i cena prodatih karata za izabrani dan prodaje i izabranog prodavca.")
+    print("7 Ukupan broj i cena prodatih karata u poslednjih 30 dana, po prodavcima.")
+    opcija = eval(input("Unesite zeljenu opcija je: "))
+
+    if opcija == PRODATE_KARTE_ZA_IZABRANI_DAN_PRODAJE:
+        danProdaje = input("Unesite dan prodaje: ")
+        pronadjeneKarte = KartaServis.prodate_karte_za_izabrani_dan_prodaje_ili_polaska(danProdaje,
+                                                                                        PRODATE_KARTE_ZA_IZABRANI_DAN_PRODAJE)
+        KartaServis.prikazi_karte(pronadjeneKarte)
+
+    elif opcija == PRODATE_KARTE_ZA_IZABRANI_DAN_POLASKA:
+        danPolaska = input("Unesite dan polaska: ")
+        pronadjeneKarte = KartaServis.prodate_karte_za_izabrani_dan_prodaje_ili_polaska(danPolaska,
+                                                                                        PRODATE_KARTE_ZA_IZABRANI_DAN_POLASKA)
+        KartaServis.prikazi_karte(pronadjeneKarte)
+
+    elif opcija == PRODATE_KARTE_ZA_IZABRANI_DAN_PRODAJE_I_IZABRANOG_PRODAVCA:
+        danProdaje = input("Unesite dan prodaje: ")
+        izabraniProdavac = input("Unesite izabranog prodavca: ")
+        pronadjeneKarte = KartaServis.prodate_karte_za_izabrani_dan_prodaje_i_izabranog_prodavca(danProdaje,
+                                                                                                 izabraniProdavac)
+        KartaServis.prikazi_karte(pronadjeneKarte)
+    else:
+        print("Uneli ste nepostojecu opciju.")
+
 
 main()
