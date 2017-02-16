@@ -1,16 +1,7 @@
 import datoteka
-# ne koristi se, moze se izbrisati
-class Korisnik:
 
-    def __init__(self, korisnickoIme, lozinka, ime, prezime, uloga):
-        self.korisnickoIme = korisnickoIme
-        self.lozinka = lozinka
-        self.ime = ime
-        self.prezime = prezime
-        self.uloga = uloga
 
 class KorisnikServis:
-
     # funkcija vraca True ako su kredencijali tacni, False ako nisu
     def login(self, korisnickoImeInput, lozinkaInput):
         korisniciRedovi = datoteka.procitaj_datoteku("korisnici.txt")
