@@ -1,3 +1,0 @@
-zika|123
-misa|misa_sifra
-milos|milos_sifra_123
